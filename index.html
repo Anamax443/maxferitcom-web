@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milan Trnka | IT Konzultant & Architekt řešení</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #FAFAF8;
+            --color-bg-alt: #F0EFEB;
+            --color-text: #1A1A1A;
+            --color-text-muted: #5A5A5A;
+            --color-accent: #2D5A3D;
+            --color-accent-light: #E8F0EA;
+            --color-border: #E0DED8;
+            --font-display: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 248, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--color-text);
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 248, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 1rem 2rem;
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-menu a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--color-bg);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, var(--color-accent-light) 0%, transparent 70%);
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+            max-width: 900px;
+            color: var(--color-text);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.1s forwards;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--color-accent);
+            display: inline-block;
+            opacity: 0;
+            transform: translateX(150px) translateY(-50px) rotate(5deg);
+            animation: wobblyWalkAndWave 2.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes wobblyWalkAndWave {
+            0% {
+                opacity: 0;
+                transform: translateX(150px) translateY(-50px) rotate(5deg);
+            }
+            10% {
+                opacity: 1;
+                transform: translateX(120px) translateY(-50px) rotate(-3deg);
+            }
+            25% {
+                transform: translateX(80px) translateY(-50px) rotate(4deg);
+            }
+            40% {
+                transform: translateX(40px) translateY(-50px) rotate(-3deg);
+            }
+            55% {
+                transform: translateX(10px) translateY(-50px) rotate(3deg);
+            }
+            65% {
+                transform: translateX(0px) translateY(-50px) rotate(0deg);
+            }
+            72% {
+                transform: translateX(8px) translateY(-30px) rotate(0deg);
+            }
+            79% {
+                transform: translateX(-5px) translateY(-15px) rotate(0deg);
+            }
+            86% {
+                transform: translateX(4px) translateY(-5px) rotate(0deg);
+            }
+            93% {
+                transform: translateX(-2px) translateY(2px) rotate(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) translateY(0) rotate(0deg);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #234A31;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(45, 90, 61, 0.25);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--color-bg-alt);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-border) 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::after {
+            content: 'MT';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-display);
+            font-size: 6rem;
+            color: var(--color-accent);
+            opacity: 0.15;
+        }
+
+        .about-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .about-content p {
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--color-accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-accent-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .service-card p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Resources Section */
+        .resources {
+            background: var(--color-bg-alt);
+        }
+
+        .resources-intro {
+            max-width: 650px;
+            color: var(--color-text-muted);
+            margin-bottom: 3rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .resource-card {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+        }
+
+        .resource-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .resource-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--color-accent-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .resource-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-content p {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .resource-meta {
+            font-size: 0.8rem;
+            color: var(--color-accent);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Blog Preview */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-card-image {
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-border) 100%);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--color-accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .blog-card:hover .blog-card-image::before {
+            opacity: 0.1;
+        }
+
+        .blog-card-date {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .blog-card p {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Contact */
+        .contact {
+            background: var(--color-text);
+            color: white;
+        }
+
+        .contact .section-eyebrow {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .contact-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .contact-item:hover {
+            opacity: 0.8;
+        }
+
+        .contact-item-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-item-text {
+            font-size: 1rem;
+        }
+
+        .contact-item-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-card {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">Milan Trnka</a>
+            <ul class="nav-links">
+                <li><a href="#about">O mně</a></li>
+                <li><a href="#services">Služby</a></li>
+                <li><a href="#resources">Zdroje</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#about" onclick="closeMenu()">O mně</a></li>
+            <li><a href="#services" onclick="closeMenu()">Služby</a></li>
+            <li><a href="#resources" onclick="closeMenu()">Zdroje</a></li>
+            <li><a href="#contact" onclick="closeMenu()">Kontakt</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">IT Konzultant · ERP Specialista · Architekt řešení</p>
+            <h1>IT má firmě <em>sloužit</em>, ne ji komplikovat</h1>
+            <p class="hero-subtitle">Za 25 let jsem prošel nákupem, managementem i IT. Pomáhám, aby IT skutečně sloužilo.</p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn btn-primary">Spojme se</a>
+                <a href="#resources" class="btn btn-secondary">Zdroje ke stažení</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="section-inner">
+            <div class="about-content" style="max-width: 800px;">
+                <p class="section-eyebrow">O mně</p>
+                <h3>IT člověk, který prošel byznysem</h3>
+                <p>Moje cesta v IT není přímočará. Začínal jsem jako správce sítě, pak jsem několik let pracoval v nákupu – vedl tým, vyjednával smlouvy, zaváděl e-aukce. Nakonec jsem se vrátil k technologiím. Díky tomu dnes vidím IT i očima byznysu.</p>
+                <p>Když navrhuji řešení, zajímá mě nejen technická stránka, ale i to, jestli to bude firmě skutečně sloužit. Jestli to lidi budou umět používat. Jestli to dává ekonomický smysl.</p>
+                <p>Preferuji stabilní, srozumitelné systémy – takové, které dokáže převzít i někdo po mně.</p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <div class="stat-number" data-start-year="2001" data-suffix="+">0</div>
+                        <div class="stat-label">let praxe</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-start-year="2015" data-suffix="+">0</div>
+                        <div class="stat-label">let v IT</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="4" data-suffix="">0</div>
+                        <div class="stat-label">různé ERP systémy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="section-inner">
+            <div class="section-header">
+                <p class="section-eyebrow">S čím pomáhám</p>
+                <h2 class="section-title">Co umím a dělám</h2>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>ERP systémy</h3>
+                    <p>Microsoft Dynamics 365 Business Central, Dynamics NAV. Implementace, správa, optimalizace, migrace dat.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🗄️</div>
+                    <h3>SQL a datová analytika</h3>
+                    <p>SQL Server, T-SQL, SSRS reporty. Návrh databází, optimalizace dotazů, datové analýzy pro rozhodování.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Automatizace</h3>
+                    <p>PowerShell, ETL procesy, AI nástroje. Automatizace rutinních úkolů, která šetří čas a eliminuje chyby.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3>Microsoft 365 a infrastruktura</h3>
+                    <p>M365 administrace, Windows Server, Active Directory. Správa a optimalizace firemního IT prostředí.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Řízení IT</h3>
+                    <p>Vedení IT týmu, řízení projektů, vyjednávání s dodavateli. IT, které dává byznysový smysl.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>Optimalizace procesů</h3>
+                    <p>Analýza a zlepšování procesů, KAIZEN přístup. Hledání úspor a efektivity napříč firmou.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section class="resources" id="resources">
+        <div class="section-inner">
+            <div class="section-header">
+                <p class="section-eyebrow">Zdroje</p>
+                <h2 class="section-title">Materiály ke stažení</h2>
+            </div>
+            <p class="resources-intro">Dokumenty a šablony, které používám ve své praxi. Volně ke stažení pro IT manažery a administrátory.</p>
+            
+            <div class="resources-grid">
+                <a href="downloads/it-assessment-otazky.pdf" class="resource-card" download>
+                    <div class="resource-icon">📄</div>
+                    <div class="resource-content">
+                        <h3>IT Assessment – Otázky pro posouzení stavu IT</h3>
+                        <p>Komplexní dotazník pro audit IT infrastruktury, procesů a týmu.</p>
+                        <span class="resource-meta">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            PDF · Stáhnout zdarma
+                        </span>
+                    </div>
+                </a>
+                
+                <a href="downloads/anketa-pro-it-tym.pdf" class="resource-card" download>
+                    <div class="resource-icon">📊</div>
+                    <div class="resource-content">
+                        <h3>Anketa pro IT tým</h3>
+                        <p>Dotazník pro analýzu IT zralosti a plánování rozvoje týmu.</p>
+                        <span class="resource-meta">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            PDF · Stáhnout zdarma
+                        </span>
+                    </div>
+                </a>
+                
+                <a href="downloads/incident-response-postup.pdf" class="resource-card" download>
+                    <div class="resource-icon">🚨</div>
+                    <div class="resource-content">
+                        <h3>Incident Response – Postup při napadení</h3>
+                        <p>Krok za krokem co dělat při kybernetickém incidentu.</p>
+                        <span class="resource-meta">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            PDF · Stáhnout zdarma
+                        </span>
+                    </div>
+                </a>
+            </div>
+            
+            <div style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--color-border);">
+                <h3 style="font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem; font-weight: 400;">Doporučené externí zdroje</h3>
+                <div class="resources-grid">
+                    <a href="https://nukib.cz/cs/kyberneticka-bezpecnost/regulace-a-kontrola/podpurne-materialy/" target="_blank" class="resource-card">
+                        <div class="resource-icon">🏛️</div>
+                        <div class="resource-content">
+                            <h3>NÚKIB – Minimální bezpečnostní standard</h3>
+                            <p>Oficiální metodika kybernetické bezpečnosti pro české organizace.</p>
+                            <span class="resource-meta">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Externí odkaz
+                            </span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://nukib.gov.cz/cs/infoservis/doporuceni/1511-doporuceni-nukib-pro-administratory-verze-4-0/" target="_blank" class="resource-card">
+                        <div class="resource-icon">👨‍💻</div>
+                        <div class="resource-content">
+                            <h3>NÚKIB – Doporučení pro administrátory v4.0</h3>
+                            <p>Bezpečnostní doporučení pro správce IT systémů a sítí.</p>
+                            <span class="resource-meta">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Externí odkaz
+                            </span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://nukib.gov.cz/cs/infoservis/doporuceni/1512-ochrante-svuj-domov-proti-hackerum/" target="_blank" class="resource-card">
+                        <div class="resource-icon">🏠</div>
+                        <div class="resource-content">
+                            <h3>NÚKIB – Ochraňte svůj domov proti hackerům</h3>
+                            <p>Praktická doporučení pro zabezpečení domácí sítě a zařízení.</p>
+                            <span class="resource-meta">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Externí odkaz
+                            </span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://nukib.gov.cz/cs/infoservis/aktuality/" target="_blank" class="resource-card">
+                        <div class="resource-icon">📰</div>
+                        <div class="resource-content">
+                            <h3>NÚKIB – Aktuality</h3>
+                            <p>Nejnovější zprávy a varování z oblasti kybernetické bezpečnosti.</p>
+                            <span class="resource-meta">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Externí odkaz
+                            </span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://nukib.gov.cz/cs/infoservis/dokumenty-a-publikace/sdileni-informaci/#barevne-provedeni" target="_blank" class="resource-card">
+                        <div class="resource-icon">🎨</div>
+                        <div class="resource-content">
+                            <h3>NÚKIB – Infografiky a plakáty</h3>
+                            <p>Vizuální materiály pro zvýšení povědomí o kybernetické bezpečnosti.</p>
+                            <span class="resource-meta">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Externí odkaz
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="section-inner">
+            <div class="section-header">
+                <p class="section-eyebrow">Kontakt</p>
+                <h2 class="section-title">Pojďme se spojit</h2>
+            </div>
+            
+            <div class="contact-grid">
+                <div>
+                    <p class="contact-text">Hledáte někoho, kdo vám pomůže s IT strategií, bezpečností nebo automatizací? Nebo jen chcete probrat nápad? Napište mi.</p>
+                    
+                    <div class="contact-info">
+                        <a href="#" id="email-link" class="contact-item">
+                            <div class="contact-item-icon">✉️</div>
+                            <div>
+                                <div class="contact-item-label">Email</div>
+                                <div class="contact-item-text" id="email-text">Načítám...</div>
+                            </div>
+                        </a>
+                        
+                        <a href="#" id="phone-link" class="contact-item">
+                            <div class="contact-item-icon">📱</div>
+                            <div>
+                                <div class="contact-item-label">Telefon</div>
+                                <div class="contact-item-text" id="phone-text">Načítám...</div>
+                            </div>
+                        </a>
+                        
+                        <a href="https://linkedin.com/in/milantrnka" target="_blank" class="contact-item">
+                            <div class="contact-item-icon">💼</div>
+                            <div>
+                                <div class="contact-item-label">LinkedIn</div>
+                                <div class="contact-item-text">linkedin.com/in/milantrnka</div>
+                            </div>
+                        </a>
+                        
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📍</div>
+                            <div>
+                                <div class="contact-item-label">Lokace</div>
+                                <div class="contact-item-text">Jihomoravský kraj, Brno</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Milan Trnka. Všechna práva vyhrazena.</p>
+    </footer>
+
+    <!-- Anti-spam obfuskace kontaktů -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Email obfuskace
+        var u = 'milan.trnka';
+        var d = 'maxferit';
+        var t = 'com';
+        var emailLink = document.getElementById('email-link');
+        var emailText = document.getElementById('email-text');
+        var fullEmail = u + '@' + d + '.' + t;
+        emailLink.href = 'mai' + 'lto:' + fullEmail;
+        emailText.textContent = fullEmail;
+        
+        // Telefon obfuskace
+        var p1 = '+420';
+        var p2 = '608';
+        var p3 = '765';
+        var p4 = '412';
+        var phoneLink = document.getElementById('phone-link');
+        var phoneText = document.getElementById('phone-text');
+        var fullPhone = p1 + ' ' + p2 + ' ' + p3 + ' ' + p4;
+        phoneLink.href = 'te' + 'l:' + p1 + p2 + p3 + p4;
+        phoneText.textContent = fullPhone;
+
+        // Animované počítadla
+        // Roky začátku: praxe 2001, IT 2015
+        const counters = document.querySelectorAll('.stat-number');
+        const currentYear = new Date().getFullYear();
+        
+        const animateCounter = (el, target, suffix) => {
+            const duration = 2000;
+            const steps = 60;
+            const stepTime = duration / steps;
+            let current = 0;
+            
+            const easeOut = t => 1 - Math.pow(1 - t, 3);
+            
+            const timer = setInterval(() => {
+                current++;
+                const progress = easeOut(current / steps);
+                const value = Math.round(progress * target);
+                el.textContent = value + (suffix || '');
+                
+                if (current >= steps) {
+                    clearInterval(timer);
+                    el.textContent = target + (suffix || '');
+                }
+            }, stepTime);
+        };
+
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    let target;
+                    const suffix = el.dataset.suffix || '';
+                    
+                    if (el.dataset.startYear) {
+                        target = currentYear - parseInt(el.dataset.startYear);
+                    } else if (el.dataset.target) {
+                        target = parseInt(el.dataset.target);
+                    }
+                    
+                    animateCounter(el, target, suffix);
+                    observer.unobserve(el);
+                }
+            });
+        }, observerOptions);
+
+        counters.forEach(counter => observer.observe(counter));
+    });
+
+    // Hamburger menu funkce
+    function toggleMenu() {
+        document.querySelector('.hamburger').classList.toggle('active');
+        document.getElementById('mobileMenu').classList.toggle('active');
+    }
+
+    function closeMenu() {
+        document.querySelector('.hamburger').classList.remove('active');
+        document.getElementById('mobileMenu').classList.remove('active');
+    }
+    </script>
+</body>
+</html>
