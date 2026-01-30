@@ -1049,7 +1049,8 @@
         };
 
         const observerOptions = {
-            threshold: 0.5
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -1065,7 +1066,10 @@
                         target = parseInt(el.dataset.target);
                     }
                     
-                    animateCounter(el, target, suffix);
+                    // Malé zpoždění pro lepší efekt
+                    setTimeout(() => {
+                        animateCounter(el, target, suffix);
+                    }, 200);
                     observer.unobserve(el);
                 }
             });
