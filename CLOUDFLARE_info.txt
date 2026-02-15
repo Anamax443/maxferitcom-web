@@ -1,0 +1,103 @@
+======================================================
+CLOUDFLARE NASTAVENÍ PRO MAXFERIT.CZ / MAXFERIT.COM
+======================================================
+Poslední aktualizace: 2026-02-15
+
+Tento soubor dokumentuje důležitá nastavení Cloudflare,
+která jsou nutná pro správné fungování webu.
+
+------------------------------------------------------
+1. CLOUDFLARE PAGES
+------------------------------------------------------
+Projekt:          maxferitcz-web
+GitHub repo:      Anamax443/maxferitcz-web
+Branch:           main
+Build command:    (žádný - statický web)
+Output directory: /
+Auto deploy:      ANO (při každém push do main)
+
+Domény:
+  - maxferitcz-web.pages.dev (výchozí)
+  - maxferit.cz (custom domain)
+  - maxferit.com (custom domain)
+
+------------------------------------------------------
+2. SECURITY - OBOJE DOMÉNY
+------------------------------------------------------
+Email Address Obfuscation: VYPNUTO (!)
+
+  DŮVOD: Web používá vlastní JavaScript obfuskaci
+  kontaktů (email, telefon) v souboru script.js.
+  Cloudflare Email Obfuscation přepisuje DOM elementy
+  a koliduje s naším kódem, čímž rozbíjí JavaScript.
+
+  Cesta: Security → Settings → Email Address Obfuscation
+
+  POZOR: Toto nastavení je PER DOMÉNA - musí být
+  vypnuto zvlášť pro maxferit.cz i maxferit.com!
+
+------------------------------------------------------
+3. SPEED - CONTENT OPTIMIZATION
+------------------------------------------------------
+Rocket Loader:    VYPNUTO
+Auto Minify JS:   VYPNUTO
+
+  DŮVOD: Obě funkce modifikují načítání a obsah
+  JavaScriptu, což může rozbít funkčnost webu.
+
+  Cesta: Speed → Settings → Content Optimization
+
+------------------------------------------------------
+4. DŮLEŽITÉ POZNÁMKY K JAVASCRIPTU
+------------------------------------------------------
+Cloudflare Pages automaticky přidává hlavičku:
+  Content-Security-Policy: script-src 'self'
+
+To znamená:
+  - NESMÍ se používat inline <script> tagy v HTML
+  - Veškerý JavaScript MUSÍ být v externím souboru
+    (script.js) a odkazovaný přes <script src="script.js">
+  - Inline onclick="" atributy NEFUNGUJÍ - vše přes
+    addEventListener v externím JS souboru
+
+------------------------------------------------------
+5. DNS ZÁZNAMY
+------------------------------------------------------
+Obě domény používají Cloudflare DNS (nameservery).
+DNS Setup: Full (pro obě domény)
+
+SSL/TLS: Full (Strict)
+
+------------------------------------------------------
+6. STRUKTURA PROJEKTU
+------------------------------------------------------
+maxferitcz-web/
+├── index.html          Hlavní stránka
+├── script.js           Veškerý JavaScript (menu,
+│                       kontakty, počítadla)
+├── CLOUDFLARE.txt      Tento soubor
+└── downloads/          PDF materiály ke stažení
+    ├── anketa-pro-it-tym.pdf
+    ├── business-continuity-plan.pdf
+    ├── comp-framework-odmenovani.pdf
+    ├── disaster-recovery-plan.pdf
+    ├── incident-response-postup.pdf
+    ├── it-assessment-otazky.pdf
+    └── ...
+
+------------------------------------------------------
+7. TROUBLESHOOTING
+------------------------------------------------------
+Pokud po deployi nefunguje JavaScript:
+  1. Zkontroluj Console (F12) na CSP chyby
+  2. Ověř, že NENÍ inline <script> v index.html
+  3. Ověř, že Email Obfuscation je VYPNUTÁ (obě domény)
+  4. Purge cache: Caching → Configuration → Purge Everything
+  5. Testuj v anonymním okně prohlížeče
+
+Pokud se změny neprojeví:
+  1. Zkontroluj deploy v Cloudflare: Workers & Pages →
+     maxferitcz-web → Deployments
+  2. Purge cache (viz bod 4 výše)
+  3. Zapni Development Mode: Overview → Quick Actions →
+     Development Mode (dočasně obejde cache)
