@@ -37,7 +37,7 @@
     try {
         var u = 'milan.trnka';
         var d = 'maxferit';
-        var t = 'cz';
+        var t = 'com';
         var emailLink = document.getElementById('email-link');
         var emailText = document.getElementById('email-text');
         if (emailLink && emailText) {
