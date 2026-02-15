@@ -46,6 +46,7 @@
             right: 0;
             background: rgba(250, 250, 248, 0.92);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--color-border);
             z-index: 1000;
             padding: 1rem 2rem;
@@ -107,7 +108,11 @@
             flex-direction: column;
             cursor: pointer;
             gap: 5px;
-            padding: 5px;
+            padding: 10px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .hamburger span {
@@ -115,6 +120,7 @@
             height: 2px;
             background: var(--color-text);
             transition: all 0.3s;
+            pointer-events: none;
         }
 
         .hamburger.active span:nth-child(1) {
@@ -137,6 +143,7 @@
             right: 0;
             background: rgba(250, 250, 248, 0.98);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--color-border);
             padding: 1rem 2rem;
             z-index: 999;
@@ -160,6 +167,7 @@
             font-weight: 500;
             display: block;
             padding: 0.5rem 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Hero Section */
@@ -730,7 +738,7 @@
                 <li><a href="#resources">Zdroje</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
-            <div class="hamburger" onclick="toggleMenu()">
+            <div class="hamburger" id="hamburgerBtn">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -739,10 +747,10 @@
     </nav>
     <div class="mobile-menu" id="mobileMenu">
         <ul>
-            <li><a href="#about" onclick="closeMenu()">O mně</a></li>
-            <li><a href="#services" onclick="closeMenu()">Služby</a></li>
-            <li><a href="#resources" onclick="closeMenu()">Zdroje</a></li>
-            <li><a href="#contact" onclick="closeMenu()">Kontakt</a></li>
+            <li><a href="#about">O mně</a></li>
+            <li><a href="#services">Služby</a></li>
+            <li><a href="#resources">Zdroje</a></li>
+            <li><a href="#contact">Kontakt</a></li>
         </ul>
     </div>
 
@@ -998,96 +1006,6 @@
         <p>© 2025 Milan Trnka. Všechna práva vyhrazena.</p>
     </footer>
 
-    <!-- Anti-spam obfuskace kontaktů -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Email obfuskace
-        var u = 'milan.trnka';
-        var d = 'maxferit';
-        var t = 'com';
-        var emailLink = document.getElementById('email-link');
-        var emailText = document.getElementById('email-text');
-        var fullEmail = u + '@' + d + '.' + t;
-        emailLink.href = 'mai' + 'lto:' + fullEmail;
-        emailText.textContent = fullEmail;
-        
-        // Telefon obfuskace
-        var p1 = '+420';
-        var p2 = '608';
-        var p3 = '765';
-        var p4 = '412';
-        var phoneLink = document.getElementById('phone-link');
-        var phoneText = document.getElementById('phone-text');
-        var fullPhone = p1 + ' ' + p2 + ' ' + p3 + ' ' + p4;
-        phoneLink.href = 'te' + 'l:' + p1 + p2 + p3 + p4;
-        phoneText.textContent = fullPhone;
-
-        // Animované počítadla
-        // Roky začátku: praxe 2001, IT 2015
-        const counters = document.querySelectorAll('.stat-number');
-        const currentYear = new Date().getFullYear();
-        
-        const animateCounter = (el, target, suffix) => {
-            const duration = 2000;
-            const steps = 60;
-            const stepTime = duration / steps;
-            let current = 0;
-            
-            const easeOut = t => 1 - Math.pow(1 - t, 3);
-            
-            const timer = setInterval(() => {
-                current++;
-                const progress = easeOut(current / steps);
-                const value = Math.round(progress * target);
-                el.textContent = value + (suffix || '');
-                
-                if (current >= steps) {
-                    clearInterval(timer);
-                    el.textContent = target + (suffix || '');
-                }
-            }, stepTime);
-        };
-
-        const observerOptions = {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    let target;
-                    const suffix = el.dataset.suffix || '';
-                    
-                    if (el.dataset.startYear) {
-                        target = currentYear - parseInt(el.dataset.startYear);
-                    } else if (el.dataset.target) {
-                        target = parseInt(el.dataset.target);
-                    }
-                    
-                    // Malé zpoždění pro lepší efekt
-                    setTimeout(() => {
-                        animateCounter(el, target, suffix);
-                    }, 200);
-                    observer.unobserve(el);
-                }
-            });
-        }, observerOptions);
-
-        counters.forEach(counter => observer.observe(counter));
-    });
-
-    // Hamburger menu funkce
-    function toggleMenu() {
-        document.querySelector('.hamburger').classList.toggle('active');
-        document.getElementById('mobileMenu').classList.toggle('active');
-    }
-
-    function closeMenu() {
-        document.querySelector('.hamburger').classList.remove('active');
-        document.getElementById('mobileMenu').classList.remove('active');
-    }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
